@@ -41,11 +41,7 @@ new Vue({
                 text: `Player ${doSpecial ? "casts special attack on" : "hits"} Monster for ${damage} pts`
             })
 
-            if (this.checkWin()) return
-
-            this.monsterAttacks()
-
-            this.checkWin()
+            if(this.gameIsRunning) this.monsterAttacks()
         },
         heal: function() {
             if (this.playerHealth <= 100 - this.playerHealAmt) {
@@ -58,7 +54,6 @@ new Vue({
                 text: `Player heals ${this.playerHealAmt} pts`
             })
             this.monsterAttacks()
-            this.checkWin()
         },
         giveUp: function() {
             this.gameIsRunning = false
@@ -76,18 +71,24 @@ new Vue({
             return Math.max(damageObj.minDamage, Math.floor(Math.random() * damageObj.maxDamage) + 1)
         },
         checkWin: function() {
+            if (!this.gameIsRunning) return
+
             if (this.monsterHealth <= 0 || this.playerHealth <= 0) {
-
+                this.gameIsRunning = false;
                 var didWin = this.monsterHealth <= 0
-
 
                 if(confirm(`You ${didWin ? "won" : "lost"}! New Game?`)) {
                     this.startGame();
-                } else {
-                    this.gameIsRunning = false;
                 }
-                return didWin
             }
+        }
+    },
+    watch: {
+        monsterHealth: function() {
+            this.checkWin()
+        },
+        playerHealth: function() {
+            this.checkWin()
         }
     }
 })
