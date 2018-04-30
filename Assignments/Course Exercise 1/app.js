@@ -23,6 +23,7 @@ new Vue({
             minDamage: 5
         }
     },
+    // test commit
     methods: {
         startGame: function() {
           this.gameIsRunning = true
