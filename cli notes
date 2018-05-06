@@ -1,0 +1,14 @@
+to get back to webstorm projects on work comp, do
+. web.sh
+
+===================================================
+
+create webpack-simple project
+vue init webpack-simple projectName
+
+
+compile and run app
+npm run dev
+
+make prod build
+npm build
